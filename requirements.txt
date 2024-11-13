@@ -5,3 +5,5 @@ pydantic
 # pymongo
 # dnspython
 # mysqlclient
+
+mysql-connector-python
