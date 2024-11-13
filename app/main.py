@@ -8,10 +8,17 @@ import json
 import os
 
 app = FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")  # zone apex
 def zone_apex():
-    return {"Hello": "dododododo"}
+    return {"Hello": "dodododobbbbyyy"}
 
 @app.get("/add/{a}/{b}")
 def add(a: int, b: int):
@@ -40,6 +47,7 @@ cur=db.cursor()
 
 # ---------------
 
+
 @app.get('/genres')
 def get_genres():
     query = "SELECT * FROM genres ORDER BY genreid;"
@@ -52,9 +60,8 @@ def get_genres():
             json_data.append(dict(zip(headers,result)))
         return(json_data)
     except Error as e:
-        print("MySQL Error: ", str(e))
-        return None
-    cur.close()
+        return {"Error": "MySQL Error: " + str(e)}
+    
 
 @app.get('/songs')
 def get_songs():
@@ -70,7 +77,5 @@ def get_songs():
             json_data.append(dict(zip(headers,result)))
         return(json_data)
     except Error as e:
-        print("MySQL Error: ", str(e))
-        return None
-    cur.close()
+        return {"Error": "MySQL Error: " + str(e)}
 
